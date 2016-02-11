@@ -1,4 +1,4 @@
-# Senior Design
+# Senior Design :boom:
 
 Hanabi is a cooperative game in which players try to create the perfect fireworks show by placing the cards on the table in the right order.
 
@@ -60,7 +60,9 @@ On their turn, a player may give another player a piece of information.
 Valid information is either the color or number of a card or cards in their hand.
 
 For example, given the following hand:
-	[(Red 1), (Blue1), (Red 2), (Green 4)]
+
+[(Red 1), (Blue1), (Red 2), (Green 4)]
+
 Valid information could be any of the following:
 - Cards 1 and 3 are Red
 - Cards 1 and 2 are '1'
@@ -72,6 +74,9 @@ Valid information could be any of the following:
 - Card 3 is '2'
 - Card 4 is Green
 - Card 4 is '4'
+
+Information for multiple cards can only be about what is common between the cards.
+
 
 ###Completing a sequence
 
