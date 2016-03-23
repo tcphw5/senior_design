@@ -1,0 +1,187 @@
+<html><head>
+    <meta name="description" content="Rules page for Hanabi">
+    <title>Rules</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="rules.css" rel="stylesheet" type="text/css">
+  </head><body>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="page-header">
+              <h1>Rules</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <p class="lead text-left">&nbsp; &nbsp; Hanabi is a cooperative game in which players try to create
+              the perfect fireworks show by placing the cards on the table in the right
+              order.
+              <br>
+              <br>&nbsp; &nbsp; The card deck consists of five different colors of cards,
+              numbered 1–5 in each color. For each color, the players try to place a
+              row in the correct order from 1–5. Sounds easy, right? Well, not quite,
+              as in this game you hold your cards so that they're visible only to other
+              players. To assist other players in playing a card, you must give them
+              hints regarding the numbers or the colors of their cards. Players must
+              act as a team to avoid errors and to finish the fireworks display before
+              they run out of cards.
+              <br>
+              <br>This project seeks to create an online version of this game, providing
+              the players only the information they may see.
+              <br>
+              <br>
+            </p>
+            <h1 class="subtitle">Game Pieces</h1>
+            <p class="lead text-left">The game pieces are as follows:
+              <br>
+              <br>50 cards consisting of 5 suits, each with:
+              <br>&nbsp; &nbsp;- Three 1's
+              <br>&nbsp; &nbsp;- Two 2's
+              <br>&nbsp; &nbsp;- Two 3's
+              <br>&nbsp; &nbsp;- Two 4's
+              <br>&nbsp; &nbsp;- One 5
+              <br>
+              <br>12 Tokens:
+              <br>&nbsp; &nbsp;- 8 Blue Clock Tokens
+              <br>&nbsp; &nbsp;- 3 Black Fuse Tokens
+              <br>&nbsp; &nbsp;- 1 Black Explosion Token
+              <br>
+              <br>&nbsp; &nbsp; A clock token is lost when a player uses their turn to give
+              another player a piece of information. A clock token can be regained if
+              a player uses their turn to discard a card.
+              <br>
+              <br>&nbsp; &nbsp; A fuse token is lost when a player plays a card that is
+              not a valid move at that point. When all fuse tokens have been lost, an
+              invalid move results in losing the black explosion token. When this token
+              is lost, the game is over and the players have lost.
+              <br>
+              <br>
+            </p>
+            <h1 class="subtitle">Rules</h1>
+            <p class="lead text-left">&nbsp; &nbsp; On their turn, a player has three options:
+              <br>&nbsp; &nbsp;- Play a card from their hand
+              <br>&nbsp; &nbsp;- Discard a card from their hand
+              <br>&nbsp; &nbsp;- Give another player information
+              <br>
+              <br>At the end of their turn, a player must have four (4) cards in their hand.
+              <br>
+              <br>
+            </p>
+            <h1 class="subtitle">Playing a Card</h1>
+            <p class="lead text-left">On their turn, a player may play a card from their hand. A move is valid
+              if it is the next number in sequence of a color on the board. For example,
+              a player my place a red '1' if the red sequence has not been started. If
+              a blue '1' has been played, a player may place a blue '2' to continue that
+              sequence.
+              <br>
+              <br>If an invalid move is made, one fuse token is removed from play.
+              <br>
+              <br>
+            </p>
+            <h1 class="subtitle">Discarding a Card</h1>
+            <p class="lead text-left">&nbsp; &nbsp; On their turn, a player may discard a card from their hand.
+              This earns back one information token that has been spent. The number of
+              information tokens may not exceed eight (8).
+              <br>
+              <br>
+            </p>
+            <h1 class="subtitle">Discard Pile</h1>
+            <p class="lead text-left">When a player discards a card from their hand, it enters the discard pile.
+              Discarded cards remain visible to all players for the remainder of the
+              game. This allows players to track what cards are still in play and determine
+              moves.
+              <br>
+              <br>
+            </p>
+            <h1 class="subtitle">Giving Information</h1>
+            <p class="lead text-left">&nbsp; &nbsp; On their turn, a player may give another player a piece
+              of information. Valid information is either the color or number of a card
+              or cards in their hand.
+              <br>
+              <br>For example, given the following hand:
+              <br>[
+              <b class="red">(Red 1)</b>,
+              <b class="blue">(Blue 1)</b>,
+              <b class="red">(Red 2)</b>,
+              <b class="green">(Green 4)</b>]
+              <br>
+              <br>Valid information could be any of the following:
+              <br>
+              <br>&nbsp; &nbsp;- Cards 1 and 3 are
+              <b class="red">Red</b>
+              <br>&nbsp; &nbsp;- Cards 1 and 2 are '1'
+              <br>&nbsp; &nbsp;- Card 1 is
+              <b class="red">Red</b>
+              <br>&nbsp; &nbsp;- Card 1 is '1'
+              <br>&nbsp; &nbsp;- Card 2 is
+              <b class="blue">Blue</b>
+              <br>&nbsp; &nbsp;- Card 2 is '1'
+              <br>&nbsp; &nbsp;- Card 3 is
+              <b class="red">Red</b>
+              <br>&nbsp; &nbsp;- Card 3 is '2'
+              <br>&nbsp; &nbsp;- Card 4 is
+              <b class="green">Green</b>
+              <br>&nbsp; &nbsp;- Card 4 is '4'
+              <br>
+              <br>Information for multiple cards can only be about what is
+              <i>common</i>between the cards.
+              <br>
+              <br>
+            </p>
+            <h1 class="subtitle">Completing a sequence</h1>
+            <p class="lead text-left">&nbsp; &nbsp; When a sequence of cards is completed (1 to 5 played in
+              the same color), a clock token is earned. This number still may not exceed
+              eight (8).
+              <br>
+              <br>
+            </p>
+            <h1 class="subtitle">End Game</h1>
+            <p class="lead text-left">The game has three (3) scenarios to end the game:
+              <br>
+              <br>&nbsp; &nbsp;- The Explosion token is lost
+              <br>&nbsp; &nbsp;- Each color sequence has been completed
+              <br>&nbsp; &nbsp;- There are no more cards in the draw pile
+              <br>
+              <br>
+            </p>
+            <h1 class="subtitle">Explosion Token Lost</h1>
+            <p class="lead text-left">&nbsp; &nbsp; One way for the game to end is for the Explosion Token to
+              be lost. This occurs when the players have made a total of four (4) invalid
+              plays. When this occurs, the game ends and the players have lost and they
+              should feel bad.
+              <br>
+              <br>
+            </p>
+            <h1 class="subtitle">Color Sequences Completed</h1>
+            <p class="lead text-left">&nbsp; &nbsp; The victory condition is that all color sequences have been
+              completed. This means each of the five (5) colors has been laid out from
+              1 to 5 on the board. If this happens, the players have won and they should
+              feel good about themselves.
+              <br>
+              <br>
+            </p>
+            <h1 class="subtitle">Draw Pile Exhausted</h1>
+            <p class="lead text-left">&nbsp; &nbsp; If a player takes the last card out of the draw pile, each
+              player receives one (1) more turn. At this point, any player can effectively
+              figure out what four cards they have based on what other players have,
+              what is already played, and what has been discarded. Because players can
+              determine their cards, each player is only given one more turn to complete
+              the sequences. If any sequence remains incomplete after the final turn,
+              they players have lost but only barely, so they don't have to feel bad.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+</body></html>
