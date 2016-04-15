@@ -18,5 +18,5 @@ from django.contrib import admin
 
 urlpatterns = patterns(
     '',
-    url(r'', include('Hanabi.urls')),
+    url(r'', include('Hanabi.urls', namespace="Hanabi")),
 )

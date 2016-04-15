@@ -15,3 +15,6 @@ def statistics(request):
 
 def rules(request):
         return render(request, 'Rules.html')
+
+def landing(request):
+        return render(request, 'Landing.html')

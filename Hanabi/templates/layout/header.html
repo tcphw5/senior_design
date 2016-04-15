@@ -16,10 +16,16 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Home</a>
+                        <a href="{% url 'Hanabi:landing' %}">Landing</a>
                     </li>
                     <li>
-                        <a href="#">Leaderboards</a>
+                        <a href="{% url 'Hanabi:index' %}">Game</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'Hanabi:statistics' %}">Statistics</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'Hanabi:rules' %}">Rules</a>
                     </li>
                 </ul>
             </div>
