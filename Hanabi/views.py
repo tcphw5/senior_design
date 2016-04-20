@@ -20,5 +20,6 @@ def rules(request):
 def landing(request):
         return render(request, 'Landing.html')
 
+
 def create_game(request):
-        return render(request, 'create_game.html')
+        return render(request, 'Create_game.html')
