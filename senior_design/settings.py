@@ -55,7 +55,7 @@ ROOT_URLCONF = 'senior_design.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'Hanabi/templates/')]
+        'DIRS': [os.path.join(BASE_DIR, 'Hanabi/templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
