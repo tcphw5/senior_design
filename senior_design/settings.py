@@ -25,7 +25,7 @@ SECRET_KEY = 'sx=3n(pp1y(of8=sekf$$rsk1=b&t61g4x3t6=jw@6obdpw&!m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['52.38.150.107']
 
 
 # Application definition
@@ -55,7 +55,7 @@ ROOT_URLCONF = 'senior_design.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'Hanabi/templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'Hanabi/templates/')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -119,6 +119,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = 'Hanabi/static/'
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static_dir"),
+]
+
 
 

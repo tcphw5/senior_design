@@ -16,5 +16,9 @@ def statistics(request):
 def rules(request):
         return render(request, 'Rules.html')
 
+
 def landing(request):
         return render(request, 'Landing.html')
+
+def create_game(request):
+        return render(request, 'create_game.html')
