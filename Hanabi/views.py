@@ -21,5 +21,5 @@ def landing(request):
         return render(request, 'Landing.html')
 
 
-def create_game(request):
-        return render(request, 'Create_game.html')
+def joingame(request):
+        return render(request, 'Join.html')
