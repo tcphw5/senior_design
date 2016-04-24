@@ -4,8 +4,8 @@ class Deck:
     """
     Meaningful docstring
     """
-    def __init__(self):
-        self.cards = setup_cards()
+    def __init__(self, difficulty):
+        self.cards = setup_cards(difficulty)
 
     def deal(self, num_players):
         """
@@ -37,13 +37,13 @@ class Deck:
     def draw(self):
         """
         Function to draw from the deck
-\
+
         :return: the card drawn by the player
             cards is modified as it is a reference parameter
         """
         return self.cards.pop()
 
-def setup_cards():
+def setup_cards(difficulty):
     """
     Function to create list of cards.
     List will be shuffled into random order.
