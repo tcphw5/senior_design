@@ -1,4 +1,4 @@
-from errors import *
+# from errors import *
 from copy import deepcopy
 
 UNKNOWN_INFO = {'number': False, 'color': False}
@@ -49,8 +49,8 @@ class Player:
                     self.known[index]['number'] = True
                 print(self.known[index])
             else:
-                raise InformationTypeError('Information type must be "color" or "number"')
-        
+                pass
+                # raise InformationTypeError('Information type must be "color" or "number"')
 
     def give_hint(self, indices, info_type, target):
         information = {'indices': indices, 'type': info_type}

@@ -3,10 +3,25 @@ import textwrap
 from django.http import HttpResponse
 from django.views.generic.base import View
 from django.shortcuts import render
+from .game import Game
 
 
 def index(request):
-        return render(request, 'index.html')
+        hand = []
+        players = ['mildlysauce', 'aaron', 'tyler', 'travis']
+        hand.append('y1')
+        hand.append('y1')
+        hand.append('y1')
+        hand.append('y1')
+        hand.append('y1')
+        game = Game(players)
+
+        context = {
+                'test': hand,
+                'game': game
+        }
+
+        return render(request, 'index.html', context)
 
 
 def statistics(request):

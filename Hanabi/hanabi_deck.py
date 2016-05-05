@@ -71,16 +71,16 @@ def setup_cards(difficulty):
     :return: cards - list of shuffled cards
     """
 
-    colors = ['red', 'blue', 'green', 'yellow', 'white']
+    colors = ['r', 'b', 'g', 'y', 'w']
     cards = []
     for color in colors:
         for i in range(3):
-            cards.append({'color': color, 'value': 1})
+            cards.append(color + '1')
         for i in range(2):
-            cards.append({'color': color, 'value': 2})
-            cards.append({'color': color, 'value': 3})
-            cards.append({'color': color, 'value': 4})
-        cards.append({'color': color, 'value': 5})
+            cards.append(color + '2')
+            cards.append(color + '3')
+            cards.append(color + '4')
+        cards.append(color + '5')
 
     shuffle(cards)
 
@@ -124,6 +124,7 @@ def draw(cards):
     """
     return cards.pop()
 
+"""
 if __name__ == '__main__':
-    deck = setup_cards()
-    print(deal_hands(4, deck))
+    deck = setup_cards(0)
+"""

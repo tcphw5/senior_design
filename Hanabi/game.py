@@ -1,4 +1,5 @@
 import Hanabi.hanabi_deck as hanabi_deck
+import Hanabi.player as Player
 
 class Game:
     """
@@ -11,7 +12,7 @@ class Game:
         multiple games on the server at a time using some sort of game ID.
     """
 
-    def __init__(self, players, id=None, difficulty=0, password=None):
+    def __init__(self, players, gameid=None, difficulty=0, password=None):
         """
         Constructor for game.
 
@@ -31,8 +32,8 @@ class Game:
         """
         self.deck = hanabi_deck.Deck(difficulty)
         self.current_player = 0
-        self.players = players
-        self.id = id
+        self.players = []
+        self.gameid = gameid
         self.password = password
         self.difficulty = difficulty
         self.board = create_board(difficulty)
@@ -40,8 +41,9 @@ class Game:
 
         hands = self.deck.deal(len(players))
         for i in range(len(players)):
-            self.players[i].game = self
-            self.players[i].deal(hands[i])
+            newPlayer = Player.Player(players[i])
+            newPlayer.deal(hands[i])
+            self.players.append(newPlayer)
 
 
     def play(self, card):

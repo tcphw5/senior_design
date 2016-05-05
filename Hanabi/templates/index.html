@@ -2,8 +2,8 @@
 {% load staticfiles %}
 <div class="col-lg-6">
     <div class="well trans">
-        <div class="row big-text">
-            <p style="margin-left: 15px">Playing Field</p>
+        <div class="row big-text" style="text-align: center">
+            <p>Playing Field</p>
         </div>
         <hr />
         <div class="row">
@@ -13,10 +13,9 @@
             <div class="col-lg-1">
                 &nbsp;
             </div>
-            <img src="{% static "media/y1.png" %}" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
+            {% for card in test %}
+                <img src="/static/media/{{ card }}.png" height="140" id="{{ card }}"/>
+            {% endfor %}
         </div>
         <div class="row">&nbsp;</div>
         <div class="row">
@@ -27,8 +26,8 @@
         </div>
     </div>
     <div class="well trans">
-        <div class="row big-text">
-            <p style="margin-left: 15px">Discard</p>
+        <div class="row big-text" style="text-align: center">
+            <p>Discard</p>
         </div>
         <hr />
         <div class="row">
@@ -57,42 +56,16 @@
 </div>
 <div class="col-lg-4">
     <div class="well trans">
-        <div class="row" style="text-align: center;">
-            <h4 style="color: #b9c3cc;">Midlysaucey</h4>
-        </div>
-        <div class="row" style="margin-bottom: 15px; align-items: center">
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-        </div>
-        <div class="row" style="text-align: center">
-            <h4 style="color: #b9c3cc;">aeirdnom</h4>
-        </div>
-        <div class="row" style="margin-bottom: 15px">
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-        </div>
-        <div class="row" style="text-align: center">
-            <h4 style="color: #b9c3cc;">Travissimo</h4>
-        </div>
-        <div class="row" style="margin-bottom: 15px">
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-        </div>
-        <div class="row" style="text-align: center">
-            <h4 style="color: #b9c3cc;">somethingShiny</h4>
-        </div>
-        <div class="row" style="margin-bottom: 15px">
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-            <img src="" wight="200" height="140" />
-        </div>
+        {% for player in game.players %}
+            <div class="row" style="text-align: center;">
+                <h4 style="color: #b9c3cc;">{{ player.name }}</h4>
+            </div>
+            <div class="row" style="margin-bottom: 15px; text-align: center">
+                {% for card in player.hand %}
+                    <img src="/static/media/{{ card }}.png" height="140" id="{{ player.name }}{{ card }}" onclick="ChangeCard(this.id);" />
+                {% endfor %}
+            </div>
+        {% endfor %}
     </div>
 </div>
 <div class="col-lg-2">
@@ -143,3 +116,18 @@
     </div>
 </div>
 {% include "layout/footer.html" %}
+<script type="text/javascript">
+    function ChangeCard(id){
+        $('#'+ id).attr('src', '/static/media/w1.png');
+    }
+    $(document).ready(function(){
+        $('#createform').hide();
+        $('#joinform').hide();
+        $('#create').click(function(){
+            $('#createform').toggle();
+        });
+        $('#join').click(function(){
+            $('#joinform').toggle();
+        });
+    });
+</script>

@@ -11,13 +11,10 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Hanabi</a>
+                <a class="navbar-brand" href="{% url 'Hanabi:landing' %}">Hanabi</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="{% url 'Hanabi:landing' %}">Landing</a>
-                    </li>
                     <li>
                         <a href="{% url 'Hanabi:index' %}">Game</a>
                     </li>
@@ -26,9 +23,6 @@
                     </li>
                     <li>
                         <a href="{% url 'Hanabi:rules' %}">Rules</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'Hanabi:joingame' %}">Join Game</a>
                     </li>
                 </ul>
             </div>
