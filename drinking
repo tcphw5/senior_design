@@ -1,0 +1,5 @@
+Discard Valid Move = take number of drinks equal to value of card 
+Use a Fuse = finish drink
+Lose the game = everyone finishes
+Play game winning move = everyone else finishes their drink
+Play a valid card = give out number of drinks equal to value of card
