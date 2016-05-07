@@ -9,16 +9,13 @@ from .game import Game
 def index(request):
         hand = []
         players = ['mildlysauce', 'aaron', 'tyler', 'travis']
-        hand.append('y1')
-        hand.append('y1')
-        hand.append('y1')
-        hand.append('y1')
-        hand.append('y1')
         game = Game(players)
+        deckSize = game.deck.cardCount
 
         context = {
                 'test': hand,
-                'game': game
+                'game': game,
+                'deckSize': deckSize
         }
 
         return render(request, 'index.html', context)

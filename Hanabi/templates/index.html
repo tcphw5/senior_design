@@ -1,28 +1,32 @@
 {% include "layout/header.html" %}
 {% load staticfiles %}
-<div class="col-lg-6">
+<div class="col-md-6">
     <div class="well trans">
         <div class="row big-text" style="text-align: center">
             <p>Playing Field</p>
         </div>
         <hr />
-        <div class="row">
-            <div id="deck" class="col-lg-1 card deck-font">
-                22
-            </div>
-            <div class="col-lg-1">
-                &nbsp;
-            </div>
-            {% for card in test %}
-                <img src="/static/media/{{ card }}.png" height="140" id="{{ card }}"/>
-            {% endfor %}
+        <div class="row" style="text-align: center; border-radius: 10px">
+            <img src="/static/media/blueblank.png" width="18%" height="140" id=""/>
+            <img src="/static/media/redblank.png" width="18%" height="140" id=""/>
+            <img src="/static/media/whiteblank.png" width="18%" height="140" id=""/>
+            <img src="/static/media/yellowblank.png" width="18%" height="140" id=""/>
+            <img src="/static/media/greenblank.png" width="18%" height="140" id=""/>
         </div>
         <div class="row">&nbsp;</div>
         <div class="row">
-            <div class="col-lg-2">&nbsp;</div>
-            <div class="col-lg-3 deck-font">Clues: 3</div>
-            <div class="col-lg-2">&nbsp;</div>
-            <div class="col-lg-3 deck-font">Fuses: 3</div>
+            <div class="col-md-4 deck-font">
+                    Cards:
+                <input type="text" id="decksize" disabled value="{{ deckSize }}" size="2">
+            </div>
+            <div class="col-md-4 deck-font">
+                Clues:
+                <input type="text" id="clues" disabled value="{{ game.clues }}" size="2">
+            </div>
+            <div class="col-md-4 deck-font">
+                Fuses:
+                <input type="text" id="fuses" disabled value="{{ game.fuses }}" size="2">
+            </div>
         </div>
     </div>
     <div class="well trans">
@@ -31,94 +35,58 @@
         </div>
         <hr />
         <div class="row">
-            <img src="" width="70" height="100" />
-            <img src="" width="70" height="100" />
-            <img src="" width="70" height="100" />
-            <img src="" width="70" height="100" />
+            <img src="/static/media/blueblank.png" width="70" height="100" />
         </div>
         <div class="row">
-            <img src="" width="70" height="100" />
-            <img src="" width="70" height="100" />
+            <img src="/static/media/redblank.png" width="70" height="100" />
         </div>
         <div class="row">
-            <img src="" width="70" height="100" />
+            <img src="/static/media/whiteblank.png" width="70" height="100" />
         </div>
         <div class="row">
-            <img src="" width="70" height="100" />
-            <img src="" width="70" height="100" />
+            <img src="/static/media/yellowblank.png" width="70" height="100" />
         </div>
         <div class="row">
-            <img src="" width="70" height="100" />
-            <img src="" width="70" height="100" />
-            <img src="" width="70" height="100" />
+            <img src="/static/media/greenblank.png" width="70" height="100" />
         </div>
     </div>
 </div>
-<div class="col-lg-4">
+<div class="col-md-4">
     <div class="well trans">
+        <div class="row big-text" style="text-align: center">
+            <p>Hands</p>
+        </div>
+        <hr />
         {% for player in game.players %}
-            <div class="row" style="text-align: center;">
-                <h4 style="color: #b9c3cc;">{{ player.name }}</h4>
-            </div>
-            <div class="row" style="margin-bottom: 15px; text-align: center">
-                {% for card in player.hand %}
-                    <img src="/static/media/{{ card }}.png" height="140" id="{{ player.name }}{{ card }}" onclick="ChangeCard(this.id);" />
-                {% endfor %}
-            </div>
+        <div class="row" style="text-align: center;">
+            <h4 style="color: #b9c3cc;">{{ player.name }}</h4>
+        </div>
+        <div class="row" style="margin-bottom: 15px; text-align: center">
+            {% for card in player.hand %}
+                <img src="/static/media/{{ card }}.png" width="20%" height="125" id="{{ player.name }}{{ card }}" onclick="ChangeCard(this.id);" />
+            {% endfor %}
+        </div>
         {% endfor %}
     </div>
 </div>
-<div class="col-lg-2">
-    <div class="well trans">
+<div class="col-md-2">
+    <div class="well trans" id="movelist">
+        <div class="row big-text" style="text-align: center">
+            <p>Moves</p>
+        </div>
+        <hr/>
         <div class="row">
             <h4 style="color: #b9c3cc;">aeirdnom</h4>plays 4 yellow
         </div>
         <hr />
-        <div class="row">
-            <h4 style="color: #b9c3cc;">Midlysaucey</h4>gives clue yellow to aeirdnom
-        </div>
-        <hr />
-        <div class="row">
-            <h4 style="color: #b9c3cc;">somethingShiny</h4>gives clue 1 to aeirdnom
-        </div>
-        <hr />
-        <div class="row">
-            <h4 style="color: #b9c3cc;">Travissimo</h4>discards 3 red
-        </div>
-        <hr />
-        <div class="row">
-            <h4 style="color: #b9c3cc;">aeirdnom</h4>discards 3 yellow
-        </div>
-        <hr />
-        <div class="row">
-            <h4 style="color: #b9c3cc;">Midlysaucey</h4>discards 3 blue
-        </div>
-        <hr />
-        <div class="row">
-            <h4 style="color: #b9c3cc;">somethingShiny</h4>playes 3 white
-        </div>
-        <hr />
-        <div class="row">
-            <h4 style="color: #b9c3cc;">Travissimo</h4>playes 3 yellow
-        </div>
-        <hr />
-        <div class="row">
-            <h4 style="color: #b9c3cc;">aeirdnom</h4>gives clue white to somethingShiny
-        </div>
-        <hr />
-        <div class="row">
-            <h4 style="color: #b9c3cc;">Midlysaucey</h4>discards 5 red
-        </div>
-        <hr />
-        <div class="row">
-            <h4 style="color: #b9c3cc;">somethingShiny</h4>gives clue 3 to Mildlysauey
-        </div>
     </div>
 </div>
 {% include "layout/footer.html" %}
 <script type="text/javascript">
     function ChangeCard(id){
         $('#'+ id).attr('src', '/static/media/w1.png');
+        $('#'+ id).attr('height', '140');
+        $('#movelist').append("<p>Testing</p>");
     }
     $(document).ready(function(){
         $('#createform').hide();

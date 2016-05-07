@@ -6,6 +6,7 @@ class Deck:
     """
     def __init__(self, difficulty):
         self.cards = setup_cards(difficulty)
+        self.cardCount = 50
 
     def deal(self, num_players):
         """
@@ -41,6 +42,7 @@ class Deck:
         :return: the card drawn by the player
             cards is modified as it is a reference parameter
         """
+        self.cardCount -= 1
         return self.cards.pop()
 
 def setup_cards(difficulty):

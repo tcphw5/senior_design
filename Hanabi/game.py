@@ -37,6 +37,8 @@ class Game:
         self.password = password
         self.difficulty = difficulty
         self.board = create_board(difficulty)
+        self.clues = 9
+        self.fuses = 3
         self.discard_pile = create_board(difficulty)
 
         hands = self.deck.deal(len(players))
@@ -44,6 +46,7 @@ class Game:
             newPlayer = Player.Player(players[i])
             newPlayer.deal(hands[i])
             self.players.append(newPlayer)
+
 
 
     def play(self, card):
