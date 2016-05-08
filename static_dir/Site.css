@@ -44,3 +44,11 @@ textarea {
     color: #b9c3cc;
     font-size: 30px;
 }
+
+.smallcard {
+    height: 125px;
+}
+
+.bigcard {
+    height: 140px;
+}

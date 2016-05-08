@@ -7,11 +7,11 @@
         </div>
         <hr />
         <div class="row" style="text-align: center; border-radius: 10px">
-            <img src="/static/media/blueblank.png" width="18%" height="140" id=""/>
-            <img src="/static/media/redblank.png" width="18%" height="140" id=""/>
-            <img src="/static/media/whiteblank.png" width="18%" height="140" id=""/>
-            <img src="/static/media/yellowblank.png" width="18%" height="140" id=""/>
-            <img src="/static/media/greenblank.png" width="18%" height="140" id=""/>
+            <img src="/static/media/blueblank.png" width="100" height="140" id="blue"/>
+            <img src="/static/media/redblank.png" width="100" height="140" id="red"/>
+            <img src="/static/media/whiteblank.png" width="100" height="140" id="white"/>
+            <img src="/static/media/yellowblank.png" width="100" height="140" id="yellow"/>
+            <img src="/static/media/greenblank.png" width="100" height="140" id="green"/>
         </div>
         <div class="row">&nbsp;</div>
         <div class="row">
@@ -34,20 +34,20 @@
             <p>Discard</p>
         </div>
         <hr />
-        <div class="row">
-            <img src="/static/media/blueblank.png" width="70" height="100" />
+        <div class="row" id="disbluelist" style="margin-bottom: 5px">
+            <img src="/static/media/blueblank.png" width="70" height="100" id="disblue" />
         </div>
-        <div class="row">
-            <img src="/static/media/redblank.png" width="70" height="100" />
+        <div class="row" id="disredlist" style="margin-bottom: 5px">
+            <img src="/static/media/redblank.png" width="70" height="100" id="disred" />
         </div>
-        <div class="row">
-            <img src="/static/media/whiteblank.png" width="70" height="100" />
+        <div class="row" id="diswhitelist" style="margin-bottom: 5px">
+            <img src="/static/media/whiteblank.png" width="70" height="100" id="diswhite" />
         </div>
-        <div class="row">
-            <img src="/static/media/yellowblank.png" width="70" height="100" />
+        <div class="row" id="disyellowlist" style="margin-bottom: 5px">
+            <img src="/static/media/yellowblank.png" width="70" height="100" id="disyellow" />
         </div>
-        <div class="row">
-            <img src="/static/media/greenblank.png" width="70" height="100" />
+        <div class="row" id="disgreenlist" style="margin-bottom: 5px">
+            <img src="/static/media/greenblank.png" width="70" height="100" id="disgreen" />
         </div>
     </div>
 </div>
@@ -63,30 +63,73 @@
         </div>
         <div class="row" style="margin-bottom: 15px; text-align: center">
             {% for card in player.hand %}
-                <img src="/static/media/{{ card }}.png" width="20%" height="125" id="{{ player.name }}{{ card }}" onclick="ChangeCard(this.id);" />
+                <img src="/static/media/{{ card }}.png" width="20%" height="125" id="{{ player.name }}{{ card }}" onclick="ChangeCard(this.id, '{{ player.name }}', '{{ card }}');" />
             {% endfor %}
+        </div>
+        <div class="row" style="text-align: center; display: none" id="{{ player.name }}options">
+            <button class="btn">Hint Color</button>
+            <button class="btn">Hint Number</button>
+            <button class="btn" id="{{ player.name }}playbtn" onclick="PlayCard(this.id, '{{ player.name }}');">Play Card</button>
+            <button class="btn" id="{{ player.name }}disbtn" onclick="DiscardCard(this.id, '{{ player.name }}');">Discard</button>
         </div>
         {% endfor %}
     </div>
 </div>
 <div class="col-md-2">
-    <div class="well trans" id="movelist">
+    <div class="well trans">
         <div class="row big-text" style="text-align: center">
             <p>Moves</p>
         </div>
         <hr/>
-        <div class="row">
-            <h4 style="color: #b9c3cc;">aeirdnom</h4>plays 4 yellow
-        </div>
-        <hr />
+        <div id="movelist"></div>
     </div>
 </div>
 {% include "layout/footer.html" %}
 <script type="text/javascript">
-    function ChangeCard(id){
-        $('#'+ id).attr('src', '/static/media/w1.png');
-        $('#'+ id).attr('height', '140');
-        $('#movelist').append("<p>Testing</p>");
+    function ChangeCard(id, name, card){
+        $('#'+ id).toggleClass('smallcard bigcard');
+        $('#'+name+'options').toggle(function(){});
+        $('#'+name+'playbtn').attr('id', card);
+        $('#'+name+'disbtn').attr('id', card);
+    }
+    function PlayCard(id, name){
+        var color = id.substring(0, 1);
+        var cnum = id.substring(1);
+        if (color == 'b') {
+            $('#blue').attr('src', '/static/media/'+id+'.png');
+            $('#movelist').prepend("<b>"+name+"</b><p>Plays blue "+cnum+"</p><hr />");
+        } else if(color == 'r') {
+            $('#red').attr('src', '/static/media/'+id+'.png');
+            $('#movelist').prepend("<b>"+name+"</b><p>Plays red "+cnum+"</p><hr />");
+        } else if(color == 'w') {
+            $('#white').attr('src', '/static/media/'+id+'.png');
+            $('#movelist').prepend("<b>"+name+"</b><p>Plays white "+cnum+"</p><hr />");
+        } else if(color == 'y') {
+            $('#yellow').attr('src', '/static/media/'+id+'.png');
+            $('#movelist').prepend("<b>"+name+"</b><p>Plays yellow "+cnum+"</p><hr />");
+        } else if(color == 'g') {
+            $('#green').attr('src', '/static/media/'+id+'.png');
+            $('#movelist').prepend("<b>"+name+"</b><p>Plays green "+cnum+"</p><hr />");
+        }
+        var count = $('#decksize').val();
+        $('#decksize').val(Number(count) - 1);
+    }
+    function DiscardCard(id, name){
+        var color = id.substring(0, 1);
+        var cnum = id.substring(1);
+        if (color == 'b') {
+            $('#disbluelist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disblue" />');
+        } else if(color == 'r') {
+            $('#disredlist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disred" />');
+        } else if(color == 'w') {
+            $('#diswhitelist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="diswhite" />');
+        } else if(color == 'y') {
+            $('#disyellowlist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disyellow" />');
+        } else if(color == 'g') {
+            $('#disgreenlist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disgreen" />');
+        }
+        var count = $('#decksize').val();
+        $('#decksize').val(Number(count) - 1);
     }
     $(document).ready(function(){
         $('#createform').hide();

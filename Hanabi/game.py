@@ -37,7 +37,7 @@ class Game:
         self.password = password
         self.difficulty = difficulty
         self.board = create_board(difficulty)
-        self.clues = 9
+        self.clues = 8
         self.fuses = 3
         self.discard_pile = create_board(difficulty)
 
