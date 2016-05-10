@@ -35,3 +35,6 @@ def landing(request):
 
 def joingame(request):
         return render(request, 'Join.html')
+
+def hello(request):
+        return HttpResponse("hello world")

@@ -81,11 +81,24 @@
             <p>Moves</p>
         </div>
         <hr/>
+        <button class="btn" onclick="testHello();">Testing</button>
         <div id="movelist"></div>
     </div>
 </div>
 {% include "layout/footer.html" %}
 <script type="text/javascript">
+    function testHello(){
+        $.ajax({
+            url: '/hello',
+            type: 'get', // This is the default though, you don't actually need to always mention it
+            success: function(data) {
+                alert(data);
+            },
+            failure: function(data) {
+                alert('Got an error dude');
+            }
+        });
+    }
     function ChangeCard(id, name, card){
         $('#'+ id).toggleClass('smallcard bigcard');
         $('#'+name+'options').toggle(function(){});

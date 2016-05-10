@@ -10,6 +10,7 @@ urlpatterns = patterns(
     url(r'^Rules/$', views.rules, name='rules'),
     url(r'^index/$', views.index, name='index'),
     url(r'^JoinGame/$', views.joingame, name='joingame'),
+    url(r'^hello/', views.hello, name='hello'),
 )
 urlpatterns += patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
