@@ -1,6 +1,7 @@
 import Hanabi.hanabi_deck as hanabi_deck
 import Hanabi.player as Player
 
+
 class Game:
     """
     Class representing the Hanabi Game.
@@ -46,8 +47,6 @@ class Game:
             newPlayer = Player.Player(players[i])
             newPlayer.deal(hands[i])
             self.players.append(newPlayer)
-
-
 
     def play(self, card):
         #Do stuff

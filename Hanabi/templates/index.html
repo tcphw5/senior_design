@@ -1,3 +1,4 @@
+
 {% include "layout/header.html" %}
 {% load staticfiles %}
 <div class="col-md-6">
@@ -81,16 +82,21 @@
             <p>Moves</p>
         </div>
         <hr/>
-        <button class="btn" onclick="testHello();">Testing</button>
+        <button class="btn" onclick="testHello('{{ game }}');">Testing</button>
         <div id="movelist"></div>
     </div>
 </div>
 {% include "layout/footer.html" %}
 <script type="text/javascript">
-    function testHello(){
+    function testHello(data){
+        console.log(typeof(data));
         $.ajax({
-            url: '/hello',
-            type: 'get', // This is the default though, you don't actually need to always mention it
+            url: '/hello/',
+            data: {
+                game: data,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            type: 'POST',
             success: function(data) {
                 alert(data);
             },

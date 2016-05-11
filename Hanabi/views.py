@@ -1,4 +1,5 @@
 import textwrap
+import json
 
 from django.http import HttpResponse
 from django.views.generic.base import View
@@ -36,5 +37,8 @@ def landing(request):
 def joingame(request):
         return render(request, 'Join.html')
 
+
 def hello(request):
-        return HttpResponse("hello world")
+        if request.method == 'POST':
+                game = request.POST['game']
+        return HttpResponse(game.clues)
