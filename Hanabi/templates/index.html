@@ -131,7 +131,8 @@
         var color = id.substring(0, 1);
         var cnum = id.substring(1,2);
         var fieldvalue = Number($('#'+color+'field').val());
-        if( fieldvalue >= Number(cnum)) {
+        var diff = (cnum - fieldvalue);
+        if( cnum >= fieldvalue &&  diff >= 1) {
             alert("Invalid Move");
         } else {
             if (color == 'b') {
@@ -161,26 +162,34 @@
         var id = $('#dummycard').val();
         var color = id.substring(0, 1);
         var cnum = id.substring(1, 2);
-        if (color == 'b') {
+        if (Number(cnum) == 5) {
+            alert('Game Over. Finish Those Beverages!!!')
+        } else {
+            if (color == 'b') {
             $('#disbluelist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disblue" />');
             $('#movelist').prepend("<b>"+name+"</b><p>Discards blue "+cnum+" and takes "+cnum+" drinks</p><hr />");
-        } else if(color == 'r') {
-            $('#disredlist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disred" />');
-            $('#movelist').prepend("<b>"+name+"</b><p>Discards red "+cnum+" and takes "+cnum+" drinks</p><hr />");
-        } else if(color == 'w') {
-            $('#diswhitelist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="diswhite" />');
-            $('#movelist').prepend("<b>"+name+"</b><p>Discards white "+cnum+" and takes "+cnum+" drinks</p><hr />");
-        } else if(color == 'y') {
-            $('#disyellowlist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disyellow" />');
-            $('#movelist').prepend("<b>"+name+"</b><p>Discards yellow "+cnum+" and takes "+cnum+" drinks</p><hr />");
-        } else if(color == 'g') {
-            $('#disgreenlist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disgreen" />');
-            $('#movelist').prepend("<b>"+name+"</b><p>Discards green "+cnum+" and takes "+cnum+" drinks</p><hr />");
+            } else if(color == 'r') {
+                $('#disredlist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disred" />');
+                $('#movelist').prepend("<b>"+name+"</b><p>Discards red "+cnum+" and takes "+cnum+" drinks</p><hr />");
+            } else if(color == 'w') {
+                $('#diswhitelist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="diswhite" />');
+                $('#movelist').prepend("<b>"+name+"</b><p>Discards white "+cnum+" and takes "+cnum+" drinks</p><hr />");
+            } else if(color == 'y') {
+                $('#disyellowlist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disyellow" />');
+                $('#movelist').prepend("<b>"+name+"</b><p>Discards yellow "+cnum+" and takes "+cnum+" drinks</p><hr />");
+            } else if(color == 'g') {
+                $('#disgreenlist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disgreen" />');
+                $('#movelist').prepend("<b>"+name+"</b><p>Discards green "+cnum+" and takes "+cnum+" drinks</p><hr />");
+            }
+            var count = $('#decksize').val();
+            $('#decksize').val(Number(count) - 1);
+            var fusecount = $('#clues').val();
+            $('#clues').val(Number(fusecount) + 1);
+            $('#'+pnum+'turn').toggle(function(){});
+            newCard(pnum+id);
+            ChangeTurn(counter);
         }
-        var count = $('#decksize').val();
-        $('#decksize').val(Number(count) - 1);
-        $('#'+pnum+'turn').toggle(function(){});
-        ChangeTurn(counter);
+
     }
     function ChangeTurn(playernumber){
         if (playernumber == '4'){
@@ -354,7 +363,19 @@
         var source = $('#'+pnum+id).attr('src');
         return source.substring(14, 15)
     }
+    function newCard(id){
+        var colors = Array('b', 'r', 'w', 'y', 'g');
+        var numbers = Array('1', '2', '3', '4');
+        var randcol = colors[Math.floor(Math.random()*colors.length)];
+        var randnum = numbers[Math.floor(Math.random()*numbers.length)];
+        $('#'+id).attr('src', '/static/media/'+randcol+randnum+'.png');
+    }
     $(document).ready(function(){
+        $('#bfield').val(1);
+        $('#rfield').val(1);
+        $('#wfield').val(1);
+        $('#yfield').val(1);
+        $('#gfield').val(1);
         $('#player2turn').hide();
         $('#player3turn').hide();
         $('#player4turn').hide();
