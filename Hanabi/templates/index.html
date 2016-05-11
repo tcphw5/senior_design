@@ -62,6 +62,11 @@
         <div class="row" style="text-align: center;">
             <h4 style="color: #b9c3cc;">{{ player.name }}</h4><div id="player{{ player.number }}turn"><p>My Turn</p></div>
         </div>
+        <input hidden="hidden" id="bfield" value="">
+        <input hidden="hidden" id="rfield" value="">
+        <input hidden="hidden" id="wfield" value="">
+        <input hidden="hidden" id="yfield" value="">
+        <input hidden="hidden" id="gfield" value="">
         <div class="row" style="text-align: center;" id="{{ player.number }}unknowncards">
             <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.number }}blank1" onclick="SelectCard(this.id, '{{ player.name }}', '{{ card }}', '{{ player.number }}');" />
             <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.number }}blank2" onclick="SelectCard(this.id, '{{ player.name }}', '{{ card }}', '{{ player.number }}');" />
@@ -125,26 +130,32 @@
         var id = $('#dummycard').val();
         var color = id.substring(0, 1);
         var cnum = id.substring(1,2);
-        if (color == 'b') {
+        var fieldvalue = Number($('#'+color+'field').val());
+        if( fieldvalue >= Number(cnum)) {
+            alert("Invalid Move");
+        } else {
+            if (color == 'b') {
             $('#blue').attr('src', '/static/media/'+id+'.png');
             $('#movelist').prepend("<b>"+name+"</b><p>Plays blue "+cnum+" and gives out "+cnum+" drinks</p><hr />");
-        } else if(color == 'r') {
-            $('#red').attr('src', '/static/media/'+id+'.png');
-            $('#movelist').prepend("<b>"+name+"</b><p>Plays red "+cnum+" and gives out "+cnum+" drinks</p><hr />");
-        } else if(color == 'w') {
-            $('#white').attr('src', '/static/media/'+id+'.png');
-            $('#movelist').prepend("<b>"+name+"</b><p>Plays white "+cnum+" and gives out "+cnum+" drinks</p><hr />");
-        } else if(color == 'y') {
-            $('#yellow').attr('src', '/static/media/'+id+'.png');
-            $('#movelist').prepend("<b>"+name+"</b><p>Plays yellow "+cnum+" and gives out "+cnum+" drinks</p><hr />");
-        } else if(color == 'g') {
-            $('#green').attr('src', '/static/media/'+id+'.png');
-            $('#movelist').prepend("<b>"+name+"</b><p>Plays green "+cnum+" and gives out "+cnum+" drinks</p><hr />");
+            } else if(color == 'r') {
+                $('#red').attr('src', '/static/media/'+id+'.png');
+                $('#movelist').prepend("<b>"+name+"</b><p>Plays red "+cnum+" and gives out "+cnum+" drinks</p><hr />");
+            } else if(color == 'w') {
+                $('#white').attr('src', '/static/media/'+id+'.png');
+                $('#movelist').prepend("<b>"+name+"</b><p>Plays white "+cnum+" and gives out "+cnum+" drinks</p><hr />");
+            } else if(color == 'y') {
+                $('#yellow').attr('src', '/static/media/'+id+'.png');
+                $('#movelist').prepend("<b>"+name+"</b><p>Plays yellow "+cnum+" and gives out "+cnum+" drinks</p><hr />");
+            } else if(color == 'g') {
+                $('#green').attr('src', '/static/media/'+id+'.png');
+                $('#movelist').prepend("<b>"+name+"</b><p>Plays green "+cnum+" and gives out "+cnum+" drinks</p><hr />");
+            }
+            var count = $('#decksize').val();
+            $('#'+color+'field').val(cnum);
+            $('#decksize').val(Number(count) - 1);
+            $('#'+pnum+'turn').toggle(function(){});
+            ChangeTurn(counter);
         }
-        var count = $('#decksize').val();
-        $('#decksize').val(Number(count) - 1);
-        $('#'+pnum+'turn').toggle(function(){});
-        ChangeTurn(counter);
     }
     function DiscardCard(name, pnum){
         var id = $('#dummycard').val();
