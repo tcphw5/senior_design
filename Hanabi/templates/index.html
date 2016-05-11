@@ -63,23 +63,29 @@
             <h4 style="color: #b9c3cc;">{{ player.name }}</h4><div id="player{{ player.number }}turn"><p>My Turn</p></div>
         </div>
         <div class="row" style="text-align: center;" id="{{ player.number }}unknowncards">
-            <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.name }}blank1" onclick="ChangeCard(this.id, '{{ player.name }}', '{{ card }}');" />
-            <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.name }}blank2" onclick="ChangeCard(this.id, '{{ player.name }}', '{{ card }}');" />
-            <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.name }}blank3" onclick="ChangeCard(this.id, '{{ player.name }}', '{{ card }}');" />
-            <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.name }}blank4" onclick="ChangeCard(this.id, '{{ player.name }}', '{{ card }}');" />
+            <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.number }}blank1" onclick="SelectCard(this.id, '{{ player.name }}', '{{ card }}', '{{ player.number }}');" />
+            <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.number }}blank2" onclick="SelectCard(this.id, '{{ player.name }}', '{{ card }}', '{{ player.number }}');" />
+            <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.number }}blank3" onclick="SelectCard(this.id, '{{ player.name }}', '{{ card }}', '{{ player.number }}');" />
+            <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.number }}blank4" onclick="SelectCard(this.id, '{{ player.name }}', '{{ card }}', '{{ player.number }}');" />
         </div>
         <div class="row" style="margin-bottom: 15px; text-align: center" id="{{ player.number }}knowncards">
             {% for card in player.hand %}
-                <img src="/static/media/{{ card }}.png" width="20%" height="125" id="{{ player.name }}{{ card }}" onclick="ChangeCard(this.id, '{{ player.name }}', '{{ card }}');" />
+                <img src="/static/media/{{ card }}.png" width="20%" height="125" id="{{ player.number }}{{ card }}" onclick="SelectCard(this.id, '{{ player.name }}', '{{ card }}', '{{ player.number }}');" />
             {% endfor %}
         </div>
-        <div class="row" style="text-align: center; display: none" id="{{ player.name }}options">
-            <button class="btn">Hint Color</button>
-            <button class="btn">Hint Number</button>
-            <button class="btn" id="{{ player.name }}playbtn" onclick="PlayCard(this.id, '{{ player.name }}');" value="">Play Card</button>
-            <button class="btn" id="{{ player.name }}disbtn" onclick="DiscardCard(this.id, '{{ player.name }}');">Discard</button>
+        <div class="row" style="text-align: center; display: none" id="{{ player.number }}hint">
+            <button class="btn" id="{{ player.name }}colorbtn" onclick="HintColor('{{ player.name }}', '{{ player.number }}');">Hint Color</button>
+            <button class="btn" id="{{ player.name }}numberbtn" onclick="HintNumber('{{ player.name }}','{{ player.number }}');">Hint Number</button>
+
+        </div>
+        <div class="row" style="text-align: center; display: none; margin-top: 15px" id="{{ player.number }}turn">
+            <button class="btn" id="{{ player.name }}playbtn" onclick="PlayCard('{{ player.name }}', '{{ player.number }}');" value="">Play Card</button>
+            <button class="btn" id="{{ player.name }}disbtn" onclick="DiscardCard('{{ player.name }}', '{{ player.number }}');">Discard</button>
         </div>
         {% endfor %}
+        <input hidden="hidden" id="dummycard" type="text" value="">
+        <input hidden="hidden" id="dummynumber" type="text" value="">
+        <input hidden="hidden" id="dummycolor" type="text" value="">
     </div>
 </div>
 <div class="col-md-2">
@@ -93,58 +99,86 @@
 </div>
 {% include "layout/footer.html" %}
 <script type="text/javascript">
-    function ChangeCard(id, name, card){
+    var counter = 1;
+    function SelectCard(id, name, card, pnumber){
         $('#'+ id).toggleClass('smallcard bigcard');
-        $('#'+name+'options').toggle(function(){});
-        $('#'+name+'playbtn').attr('id', card);
-        $('#'+name+'disbtn').attr('id', card);
+        if(card == ''){
+            if(pnumber == counter){
+                $('#'+pnumber+'turn').toggle(function(){});
+            } else {
+                $('#'+pnumber+'hint').toggle(function(){});
+            }
+            var tempcolor = getColor(pnumber, id);
+            var tempnum = getNumber(pnumber, id);
+            $('#dummycard').val(tempcolor+tempnum);
+        } else {
+            $('#dummycard').val(card);
+            if(pnumber == counter){
+                $('#'+pnumber+'turn').toggle(function(){});
+            } else {
+                $('#'+pnumber+'hint').toggle(function(){});
+            }
+        }
+
     }
-    function PlayCard(id, name){
+    function PlayCard(name, pnum){
+        var id = $('#dummycard').val();
         var color = id.substring(0, 1);
-        var cnum = id.substring(1);
+        var cnum = id.substring(1,2);
         if (color == 'b') {
             $('#blue').attr('src', '/static/media/'+id+'.png');
-            $('#movelist').prepend("<b>"+name+"</b><p>Plays blue "+cnum+"</p><hr />");
+            $('#movelist').prepend("<b>"+name+"</b><p>Plays blue "+cnum+" and gives out "+cnum+" drinks</p><hr />");
         } else if(color == 'r') {
             $('#red').attr('src', '/static/media/'+id+'.png');
-            $('#movelist').prepend("<b>"+name+"</b><p>Plays red "+cnum+"</p><hr />");
+            $('#movelist').prepend("<b>"+name+"</b><p>Plays red "+cnum+" and gives out "+cnum+" drinks</p><hr />");
         } else if(color == 'w') {
             $('#white').attr('src', '/static/media/'+id+'.png');
-            $('#movelist').prepend("<b>"+name+"</b><p>Plays white "+cnum+"</p><hr />");
+            $('#movelist').prepend("<b>"+name+"</b><p>Plays white "+cnum+" and gives out "+cnum+" drinks</p><hr />");
         } else if(color == 'y') {
             $('#yellow').attr('src', '/static/media/'+id+'.png');
-            $('#movelist').prepend("<b>"+name+"</b><p>Plays yellow "+cnum+"</p><hr />");
+            $('#movelist').prepend("<b>"+name+"</b><p>Plays yellow "+cnum+" and gives out "+cnum+" drinks</p><hr />");
         } else if(color == 'g') {
             $('#green').attr('src', '/static/media/'+id+'.png');
-            $('#movelist').prepend("<b>"+name+"</b><p>Plays green "+cnum+"</p><hr />");
+            $('#movelist').prepend("<b>"+name+"</b><p>Plays green "+cnum+" and gives out "+cnum+" drinks</p><hr />");
         }
         var count = $('#decksize').val();
         $('#decksize').val(Number(count) - 1);
+        $('#'+pnum+'turn').toggle(function(){});
+        ChangeTurn(counter);
     }
-    function DiscardCard(id, name){
+    function DiscardCard(name, pnum){
+        var id = $('#dummycard').val();
         var color = id.substring(0, 1);
-        var cnum = id.substring(1);
+        var cnum = id.substring(1, 2);
         if (color == 'b') {
             $('#disbluelist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disblue" />');
+            $('#movelist').prepend("<b>"+name+"</b><p>Discards blue "+cnum+" and takes "+cnum+" drinks</p><hr />");
         } else if(color == 'r') {
             $('#disredlist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disred" />');
+            $('#movelist').prepend("<b>"+name+"</b><p>Discards red "+cnum+" and takes "+cnum+" drinks</p><hr />");
         } else if(color == 'w') {
             $('#diswhitelist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="diswhite" />');
+            $('#movelist').prepend("<b>"+name+"</b><p>Discards white "+cnum+" and takes "+cnum+" drinks</p><hr />");
         } else if(color == 'y') {
             $('#disyellowlist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disyellow" />');
+            $('#movelist').prepend("<b>"+name+"</b><p>Discards yellow "+cnum+" and takes "+cnum+" drinks</p><hr />");
         } else if(color == 'g') {
             $('#disgreenlist').append('<img style="margin-left: 5px" src="/static/media/'+id+'.png" width="70" height="100" id="disgreen" />');
+            $('#movelist').prepend("<b>"+name+"</b><p>Discards green "+cnum+" and takes "+cnum+" drinks</p><hr />");
         }
         var count = $('#decksize').val();
         $('#decksize').val(Number(count) - 1);
-        ChangeTurn()
+        $('#'+pnum+'turn').toggle(function(){});
+        ChangeTurn(counter);
     }
     function ChangeTurn(playernumber){
         if (playernumber == '4'){
             $('#player4turn').hide();
             $('#4unknowncards').hide();
+            $('#4knowncards').show();
             $('#player1turn').show();
-            $('#1knowncards').show();
+            $('#1unknowncards').show();
+            $('#1knowncards').hide();
         } else {
             $('#player'+playernumber+'turn').hide();
             $('#'+playernumber+'unknowncards').hide();
@@ -154,6 +188,160 @@
             $('#'+tempplayernumber+'knowncards').hide();
             $('#'+tempplayernumber+'unknowncards').show();
         }
+        if (counter == 4){
+            counter = 1
+        } else {
+            counter++;
+        }
+    }
+    function HintColor(pname, pnumber){
+        var fusecount = $('#clues').val();
+        var hinted = 0;
+        if(fusecount == 0){
+            alert('No Clues Left');
+        } else {
+            var id = $('#dummycard').val();
+            var color = id.substring(0, 1);
+            var cnum = id.substring(1, 2);
+            $('.bigcard').toggleClass('smallcard bigcard');
+            for (var i = 0; i < 6; i++){
+                var source = $('#'+pnumber+color+i).attr('src');
+                var bnum = $('#'+pnumber+color+i).index() + 1;
+                var blanksource = $('#'+pnumber+'blank'+bnum).attr('src');
+                if (blanksource =='/static/media/blank.png'){
+                    if( source != undefined){
+                        if (color == 'b') {
+                            $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/blueblank.png');
+                            $('#movelist').prepend("<b>"+pname+"</b><p>was hinted blue. Both players drink</p><hr />");
+                            hinted += 1;
+                        } else if(color == 'r') {
+                            $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/redblank.png');
+                            $('#movelist').prepend("<b>"+pname+"</b><p>was hinted red. Both players drink</p><hr />");
+                            hinted += 1;
+                        } else if(color == 'w') {
+                            $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/whiteblank.png');
+                            $('#movelist').prepend("<b>"+pname+"</b><p>was hinted white. Both players drink</p><hr />");
+                            hinted += 1;
+                        } else if(color == 'y') {
+                            $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/yellowblank.png');
+                            $('#movelist').prepend("<b>"+pname+"</b><p>was hinted yellow. Both players drink</p><hr />");
+                            hinted += 1;
+                        } else if(color == 'g') {
+                            $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/greenblank.png');
+                            $('#movelist').prepend("<b>"+pname+"</b><p>was hinted green. Both players drink</p><hr />");
+                            hinted += 1;
+                        }
+                    }
+                }else {
+                    if( source != undefined){
+                        if (color == 'b') {
+                            $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/'+color+cnum+'.png');
+                            $('#movelist').prepend("<b>"+pname+"</b><p>was hinted blue. Both players drink</p><hr />");
+                            hinted += 1;
+                        } else if(color == 'r') {
+                            $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/'+color+cnum+'.png');
+                            $('#movelist').prepend("<b>"+pname+"</b><p>was hinted red. Both players drink</p><hr />");
+                            hinted += 1;
+                        } else if(color == 'w') {
+                            $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/'+color+cnum+'.png');
+                            $('#movelist').prepend("<b>"+pname+"</b><p>was hinted white. Both players drink</p><hr />");
+                            hinted += 1;
+                        } else if(color == 'y') {
+                            $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/'+color+cnum+'.png');
+                            $('#movelist').prepend("<b>"+pname+"</b><p>was hinted yellow. Both players drink</p><hr />");
+                            hinted += 1;
+                        } else if(color == 'g') {
+                            $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/'+color+cnum+'.png');
+                            $('#movelist').prepend("<b>"+pname+"</b><p>was hinted green. Both players drink</p><hr />");
+                            hinted += 1;
+                        }
+                    }
+                }
+            }
+            $('#clues').val(Number(fusecount) - 1);
+            $('#'+pnumber+'hint').toggle(function(){});
+            ChangeTurn(counter);
+        }
+    }
+    function HintNumber(pname, pnumber){
+        var fusecount = $('#clues').val();
+        var hinted = 0;
+        if(fusecount == 0){
+            alert('No Clues Left');
+        } else {
+            var id = $('#dummycard').val();
+            var cnum = id.substring(1, 2);
+            var color = id.substring(0, 1);
+            var bnum;
+            $('.bigcard').toggleClass('smallcard bigcard');
+            var bcheck = $('#'+pnumber+'b'+cnum).attr('src');
+            var rcheck = $('#'+pnumber+'r'+cnum).attr('src');
+            var wcheck = $('#'+pnumber+'w'+cnum).attr('src');
+            var ycheck = $('#'+pnumber+'y'+cnum).attr('src');
+            var gcheck = $('#'+pnumber+'g'+cnum).attr('src');
+            if(bcheck != undefined){
+                bnum = $('#'+pnumber+'b'+cnum).index() + 1;
+                var blanksource = $('#'+pnumber+'blank'+bnum).attr('src');
+                if(blanksource == '/static/media/blank.png'){
+                    $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/gray'+cnum+'.png');
+                } else {
+                    $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/b'+cnum+'.png');
+                }
+                hinted += 1;
+            }
+            if(rcheck != undefined){
+                bnum = $('#'+pnumber+'r'+cnum).index() + 1;
+                var blanksource = $('#'+pnumber+'blank'+bnum).attr('src');
+                if(blanksource == '/static/media/blank.png'){
+                    $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/gray'+cnum+'.png');
+                } else {
+                    $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/r'+cnum+'.png');
+                }
+                hinted += 1;
+            }
+            if(wcheck != undefined){
+                bnum = $('#'+pnumber+'w'+cnum).index() + 1;
+                var blanksource = $('#'+pnumber+'blank'+bnum).attr('src');
+                if(blanksource == '/static/media/blank.png'){
+                    $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/gray'+cnum+'.png');
+                } else {
+                    $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/w'+cnum+'.png');
+                }
+                hinted += 1;
+            }
+            if(ycheck != undefined){
+                bnum = $('#'+pnumber+'y'+cnum).index() + 1;
+                var blanksource = $('#'+pnumber+'blank'+bnum).attr('src');
+                if(blanksource == '/static/media/blank.png'){
+                    $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/gray'+cnum+'.png');
+                } else {
+                    $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/y'+cnum+'.png');
+                }
+                hinted += 1;
+            }
+            if(gcheck != undefined){
+                bnum = $('#'+pnumber+'g'+cnum).index() + 1;
+                var blanksource = $('#'+pnumber+'blank'+bnum).attr('src');
+                if(blanksource == '/static/media/blank.png'){
+                    $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/gray'+cnum+'.png');
+                } else {
+                    $('#'+pnumber+'blank'+bnum).attr('src', '/static/media/g'+cnum+'.png');
+                }
+                hinted += 1;
+            }
+            $('#clues').val(Number(fusecount) - 1);
+            $('#'+pnumber+'hint').toggle(function(){});
+            $('#movelist').prepend("<b>"+pname+"</b><p>was hinted "+cnum+". Both players drink "+hinted+"</p><hr />");
+            ChangeTurn(counter);
+        }
+    }
+    function getNumber(pnum, id){
+        var source = $('#'+pnum+id).attr('src');
+        return source.substring(15, 16)
+    }
+    function getColor(pnum, id){
+        var source = $('#'+pnum+id).attr('src');
+        return source.substring(14, 15)
     }
     $(document).ready(function(){
         $('#player2turn').hide();

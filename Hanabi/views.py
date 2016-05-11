@@ -15,11 +15,14 @@ def index(request, playernames):
         hand = []
         game = Game(players)
         deckSize = game.deck.cardCount
+        remdeck = game.deck
 
         context = {
                 'test': hand,
                 'game': game,
-                'deckSize': deckSize
+                'deckSize': deckSize,
+                'remdeck': remdeck
+
         }
         return render(request, 'index.html', context)
 
