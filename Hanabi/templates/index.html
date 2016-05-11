@@ -60,9 +60,15 @@
         <hr />
         {% for player in game.players %}
         <div class="row" style="text-align: center;">
-            <h4 style="color: #b9c3cc;">{{ player.name }}</h4>
+            <h4 style="color: #b9c3cc;">{{ player.name }}</h4><div id="player{{ player.number }}turn"><p>My Turn</p></div>
         </div>
-        <div class="row" style="margin-bottom: 15px; text-align: center">
+        <div class="row" style="text-align: center;" id="{{ player.number }}unknowncards">
+            <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.name }}blank1" onclick="ChangeCard(this.id, '{{ player.name }}', '{{ card }}');" />
+            <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.name }}blank2" onclick="ChangeCard(this.id, '{{ player.name }}', '{{ card }}');" />
+            <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.name }}blank3" onclick="ChangeCard(this.id, '{{ player.name }}', '{{ card }}');" />
+            <img src="/static/media/blank.png" width="20%" height="125" id="{{ player.name }}blank4" onclick="ChangeCard(this.id, '{{ player.name }}', '{{ card }}');" />
+        </div>
+        <div class="row" style="margin-bottom: 15px; text-align: center" id="{{ player.number }}knowncards">
             {% for card in player.hand %}
                 <img src="/static/media/{{ card }}.png" width="20%" height="125" id="{{ player.name }}{{ card }}" onclick="ChangeCard(this.id, '{{ player.name }}', '{{ card }}');" />
             {% endfor %}
@@ -70,7 +76,7 @@
         <div class="row" style="text-align: center; display: none" id="{{ player.name }}options">
             <button class="btn">Hint Color</button>
             <button class="btn">Hint Number</button>
-            <button class="btn" id="{{ player.name }}playbtn" onclick="PlayCard(this.id, '{{ player.name }}');">Play Card</button>
+            <button class="btn" id="{{ player.name }}playbtn" onclick="PlayCard(this.id, '{{ player.name }}');" value="">Play Card</button>
             <button class="btn" id="{{ player.name }}disbtn" onclick="DiscardCard(this.id, '{{ player.name }}');">Discard</button>
         </div>
         {% endfor %}
@@ -82,29 +88,11 @@
             <p>Moves</p>
         </div>
         <hr/>
-        <button class="btn" onclick="testHello('{{ game }}');">Testing</button>
         <div id="movelist"></div>
     </div>
 </div>
 {% include "layout/footer.html" %}
 <script type="text/javascript">
-    function testHello(data){
-        console.log(typeof(data));
-        $.ajax({
-            url: '/hello/',
-            data: {
-                game: data,
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            type: 'POST',
-            success: function(data) {
-                alert(data);
-            },
-            failure: function(data) {
-                alert('Got an error dude');
-            }
-        });
-    }
     function ChangeCard(id, name, card){
         $('#'+ id).toggleClass('smallcard bigcard');
         $('#'+name+'options').toggle(function(){});
@@ -149,15 +137,31 @@
         }
         var count = $('#decksize').val();
         $('#decksize').val(Number(count) - 1);
+        ChangeTurn()
+    }
+    function ChangeTurn(playernumber){
+        if (playernumber == '4'){
+            $('#player4turn').hide();
+            $('#4unknowncards').hide();
+            $('#player1turn').show();
+            $('#1knowncards').show();
+        } else {
+            $('#player'+playernumber+'turn').hide();
+            $('#'+playernumber+'unknowncards').hide();
+            $('#'+playernumber+'knowncards').show();
+            var tempplayernumber = playernumber + 1;
+            $('#player'+tempplayernumber+'turn').show();
+            $('#'+tempplayernumber+'knowncards').hide();
+            $('#'+tempplayernumber+'unknowncards').show();
+        }
     }
     $(document).ready(function(){
-        $('#createform').hide();
-        $('#joinform').hide();
-        $('#create').click(function(){
-            $('#createform').toggle();
-        });
-        $('#join').click(function(){
-            $('#joinform').toggle();
-        });
+        $('#player2turn').hide();
+        $('#player3turn').hide();
+        $('#player4turn').hide();
+        $('#1knowncards').hide();
+        $('#2unknowncards').hide();
+        $('#3unknowncards').hide();
+        $('#4unknowncards').hide();
     });
 </script>

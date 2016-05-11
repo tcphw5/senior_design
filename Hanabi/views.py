@@ -2,14 +2,17 @@ import textwrap
 import json
 
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.views.generic.base import View
 from django.shortcuts import render
+from django.shortcuts import redirect
 from .game import Game
 
 
-def index(request):
+def index(request, playernames):
+        players = playernames.split('/')
         hand = []
-        players = ['mildlysauce', 'aaron', 'tyler', 'travis']
         game = Game(players)
         deckSize = game.deck.cardCount
 
@@ -18,7 +21,6 @@ def index(request):
                 'game': game,
                 'deckSize': deckSize
         }
-
         return render(request, 'index.html', context)
 
 
@@ -39,6 +41,10 @@ def joingame(request):
 
 
 def hello(request):
-        if request.method == 'POST':
-                game = request.POST['game']
-        return HttpResponse(game.clues)
+        player1 = request.POST['player1']
+        player2 = request.POST['player2']
+        player3 = request.POST['player3']
+        player4 = request.POST['player4']
+        playernames = (player1+"/"+player2+"/"+player3+"/"+player4)
+
+        return HttpResponseRedirect(reverse('Hanabi:index', args=(playernames, )))

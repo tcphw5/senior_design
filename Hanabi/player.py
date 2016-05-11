@@ -10,9 +10,10 @@ class Player:
     This class is used to show each player
     """
 
-    def __init__(self, name):
+    def __init__(self, name, number):
         self.game = None
         self.name = name
+        self.number = number
         self.hand = []
         self.known = []
         pass

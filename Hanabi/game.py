@@ -44,7 +44,7 @@ class Game:
 
         hands = self.deck.deal(len(players))
         for i in range(len(players)):
-            newPlayer = Player.Player(players[i])
+            newPlayer = Player.Player(players[i], i + 1)
             newPlayer.deal(hands[i])
             self.players.append(newPlayer)
 
